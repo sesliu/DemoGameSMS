@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bossFase.ogg-db0216beced65c76b74b875ab2b2863f.oggstr"
+
+[deps]
+
+source_file="res://Songs/Juhani Junkala [Chiptune Adventures] OGG/bossFase.ogg"
+dest_files=[ "res://.import/bossFase.ogg-db0216beced65c76b74b875ab2b2863f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

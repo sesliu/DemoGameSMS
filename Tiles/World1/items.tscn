@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://item/gem/gem-4.png" type="Texture" id=1]
+[ext_resource path="res://item/gem/gem-3.png" type="Texture" id=2]
+[ext_resource path="res://item/gem/gem-1.png" type="Texture" id=3]
+[ext_resource path="res://item/gem/gem-5.png" type="Texture" id=4]
+[ext_resource path="res://item/gem/gem-2.png" type="Texture" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "gem",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 7.17977
+
+[node name="Item" type="Node2D"]
+position = Vector2( -52.3107, -10.084 )
+
+[node name="gem" type="Area2D" parent="."]
+position = Vector2( 129.732, 118.687 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="gem" type="AnimatedSprite" parent="gem"]
+frames = SubResource( 1 )
+animation = "gem"
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="gem"]
+position = Vector2( 0, -1.2605 )
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}

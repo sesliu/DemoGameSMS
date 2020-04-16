@@ -1,0 +1,123 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://player/idle/player-idle-2.png" type="Texture" id=1]
+[ext_resource path="res://player/idle/player-idle-4.png" type="Texture" id=2]
+[ext_resource path="res://player/idle/player-idle-1.png" type="Texture" id=3]
+[ext_resource path="res://player/idle/player-idle-3.png" type="Texture" id=4]
+[ext_resource path="res://player/Player.gd" type="Script" id=5]
+[ext_resource path="res://player/running/player-run-2.png" type="Texture" id=6]
+[ext_resource path="res://player/running/player-run-6.png" type="Texture" id=7]
+[ext_resource path="res://player/running/player-run-3.png" type="Texture" id=8]
+[ext_resource path="res://player/running/player-run-1.png" type="Texture" id=9]
+[ext_resource path="res://player/running/player-run-5.png" type="Texture" id=10]
+[ext_resource path="res://player/running/player-run-4.png" type="Texture" id=11]
+[ext_resource path="res://player/jump/player-jump-1.png" type="Texture" id=12]
+[ext_resource path="res://player/jump/player-jump-2.png" type="Texture" id=13]
+[ext_resource path="res://UI/GUI.tscn" type="PackedScene" id=14]
+[ext_resource path="res://player/hurt/player-hurt-1.png" type="Texture" id=15]
+[ext_resource path="res://player/hurt/player-hurt-2.png" type="Texture" id=16]
+[ext_resource path="res://System/PauseMenu.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Songs/jump.wav" type="AudioStream" id=18]
+[ext_resource path="res://Songs/hurt.wav" type="AudioStream" id=19]
+[ext_resource path="res://player/Area2D.gd" type="Script" id=20]
+[ext_resource path="res://Songs/atack.wav" type="AudioStream" id=21]
+[ext_resource path="res://player/jump/player-jump-3.png" type="Texture" id=22]
+[ext_resource path="res://player/itens.gd" type="Script" id=23]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 9.3283
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "idle",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
+"name": "falling",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "running",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 22 ), ExtResource( 22 ), ExtResource( 22 ), ExtResource( 22 ) ],
+"loop": true,
+"name": "attack",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "hurting",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": false,
+"name": "jumping",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 5.11092, 3.07851 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 4.95113, 2.97714 )
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 69.424, 341.37 )
+script = ExtResource( 5 )
+
+[node name="corpo" type="CollisionShape2D" parent="."]
+shape = SubResource( 4 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( 100, 0 )
+current = true
+zoom = Vector2( 0.6, 0.6 )
+smoothing_speed = 3.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="GUI" parent="Camera2D/CanvasLayer" instance=ExtResource( 14 )]
+
+[node name="PopupMenu" parent="Camera2D/CanvasLayer" instance=ExtResource( 17 )]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 3.69548e-06, -6.8886 )
+frames = SubResource( 2 )
+animation = "attack"
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+
+[node name="pe" type="Area2D" parent="."]
+position = Vector2( 11.8537, 7.09108 )
+script = ExtResource( 20 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="pe" type="CollisionShape2D" parent="pe"]
+z_index = 4
+shape = SubResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Ataque" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 21 )
+
+[node name="itens" type="Area2D" parent="."]
+script = ExtResource( 23 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="itens"]
+position = Vector2( 0, 2.56381 )
+shape = SubResource( 5 )
+[connection signal="area_entered" from="pe" to="pe" method="_on_Area2D_area_entered"]
+[connection signal="area_entered" from="itens" to="itens" method="_on_itens_area_entered"]
